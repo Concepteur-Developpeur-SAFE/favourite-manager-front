@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, inject, Output} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CategoryItem } from '../category-item';
+import { FavouriteService } from '../favourite.service';
 
 @Component({
   selector: 'app-view-mode',
@@ -9,5 +11,16 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./view-mode.component.css']
 })
 export class ViewModeComponent {
-
+  categories: CategoryItem[] = [];
+  favouriteService: FavouriteService = inject(FavouriteService);
+  constructor() {
+    this.favouriteService.getAllCategories().then((catList:CategoryItem[])=>{
+      this.categories = catList;
+    }
+    );
+  }
+  @Output() setModeEvent = new EventEmitter<string>();
+  setMode(mode: string) {
+    this.setModeEvent.emit(mode);
+  }
 }

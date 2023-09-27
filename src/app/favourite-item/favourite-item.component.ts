@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,5 +9,5 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./favourite-item.component.css']
 })
 export class FavouriteItemComponent {
-
+  
 }

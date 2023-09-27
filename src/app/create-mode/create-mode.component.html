@@ -1,1 +1,27 @@
-<p>create-mode works!</p>
+<div class="box" data-ng-if="mode == 'creation'">
+    <div class="columns">
+      <div class="column">
+        <h2 class="title">Add/Update a Favorite</h2>
+        <form name="form" class="form-validation" novalidate role="form">
+          <div class="field">
+            <label class="label">Link *</label>
+            <div class="control">
+              <input type="text" [(ngModel)]="favorite.link" [ngModelOptions]="{standalone:true}" class="input" required="required" />
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Category *</label>
+            <div class="control">
+              <div class="select is-fullwidth">
+                <select [(ngModel)]="favorite.category" [ngModelOptions]="{standalone:true}">
+                  <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <button class="button is-primary" type="button" (click)="validate()">OK</button>
+          <button class="button is-default" type="button" (click)="cancel()">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
