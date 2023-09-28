@@ -14,7 +14,7 @@
             <div class="control">
               <div class="select is-fullwidth">
                 <select [(ngModel)]="favorite.category" [ngModelOptions]="{standalone:true}">
-                  <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
+                  <option *ngFor="let category of categories" [ngValue]="category">{{category.label}}</option>
                 </select>
               </div>
             </div>

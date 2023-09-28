@@ -34,7 +34,7 @@ export class HomeComponent {
     label: '',
     category: {
       id: 0,
-      name: ''
+      label: ''
     },
     updatedAt: ''
   };

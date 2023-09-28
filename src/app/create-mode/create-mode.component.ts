@@ -23,7 +23,7 @@ export class CreateModeComponent {
     label: '',
     category: {
       id: 0,
-      name: ''
+      label: ''
     },
     updatedAt: ''
   };
