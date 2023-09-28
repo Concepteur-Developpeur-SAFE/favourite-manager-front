@@ -1,51 +1,61 @@
 <div class="box">
-    <div class="columns">
-      <div class="column is-narrow">
-        <button class="delete"></button>
-      </div>
-      <div class="column">
-        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-          <thead>
-            <tr>
-              <th class="is-narrow">
-                <label class="checkbox">
-                  <input type="checkbox">
-                </label>
-              </th>
-              <th class="is-narrow">ID</th>
-              <th>Link</th>
-              <th class="is-clickable">
-                <span>Category</span>
-                <span>&#x2191;</span>
-                <span>&#x2193;</span>
-              </th>
-              <th class="is-narrow is-clickable">
-                <span>Last Update</span>
-                <span >&#x2191;</span>
-                <span >&#x2193;</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngIf="favouriteList.length == 0">
-              <td colspan="4">No data !</td>
-            </tr>
-            <tr *ngFor="let f of favouriteList">
-              <td>
-                <label class="checkbox">
-                  <input type="checkbox" [checked]="checked[f.id]">
-                </label>
-              </td>
-              <td>{{f.id}}</td>
-              <td>{{f.link}}<a data-ng-href="f.link" target="_blank"></a></td>
-              <td>{{f.category.label}}</td>
-              <td>{{f.updatedAt}}</td>
-              <td class="is-narrow">
-                <a href="#" (click)="update(f)">update</a> 
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div class="columns">
+    <div class="column is-narrow">
+      <button (click)="deleteFavorite()" class="delete"></button>
+    </div>
+    <div class="column">
+      <table
+        class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth"
+      >
+        <thead>
+          <tr>
+            <th class="is-narrow">
+              <label class="checkbox">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="masterCheckboxChecked"
+                  (change)="toggleAllCheckboxes()"
+                />
+              </label>
+            </th>
+            <th class="is-narrow">ID</th>
+            <th>Link</th>
+            <th class="is-clickable">
+              <span>Category</span>
+              <span>&#x2191;</span>
+              <span>&#x2193;</span>
+            </th>
+            <th class="is-narrow is-clickable">
+              <span>Last Update</span>
+              <span>&#x2191;</span>
+              <span>&#x2193;</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="favouriteList.length == 0">
+            <td colspan="4">No data !</td>
+          </tr>
+          <tr *ngFor="let f of favouriteList">
+            <td>
+              <label class="checkbox">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="checked[f.id]"
+                  (change)="checkMasterCheckbox()"
+                />
+              </label>
+            </td>
+            <td>{{ f.id }}</td>
+            <td>{{ f.link }}<a data-ng-href="f.link" target="_blank"></a></td>
+            <td>{{ f.category.label }}</td>
+            <td>{{ f.updatedAt | date : "yyyy-MM-dd" }}</td>
+            <td class="is-narrow">
+              <a href="#" (click)="update(f)">update</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+</div>
