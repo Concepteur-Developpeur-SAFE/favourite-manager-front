@@ -1,0 +1,15 @@
+<div class="box">
+    <h2 class="title">Main menu</h2>
+    <div class="columns">
+      <div class="column">
+        <div class="select is-fullwidth">
+          <select>
+            <option *ngFor="let category of categories">{{category.label}} </option>
+          </select>
+        </div>
+      </div>
+      <div class="column  is-narrow">
+        <button class="button is-primary" (click) = "setMode('create')">Add</button>
+      </div>
+    </div>
+</div>
