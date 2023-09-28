@@ -20,6 +20,10 @@ export class FavouriteService {
     const copyOfFavourite: FavouriteItem = { ...favourite };
     fetch('https://localhost:7280/api/favourite/add', {method: "POST", body: JSON.stringify(copyOfFavourite)});
   }
+  async filterFavourites(categoryId: number): Promise<FavouriteItem[]>{
+  const data = fetch (`https://localhost:7280/api/favorite/filter/`+categoryId);
+  return (await data).json() ?? [];
+}
 
   constructor(
     private http: HttpClient
