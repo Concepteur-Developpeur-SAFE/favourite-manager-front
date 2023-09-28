@@ -59,4 +59,24 @@ export class FavouriteListComponent {
     this.setMode('create');
     this.updateCurrentFavourite(favourite);
   }
+  sortByCat() {
+    this.favouriteService.sortFavoritesByCategory().then((favList: FavouriteItem[]) => {
+      this.favouriteList = favList;
+    });
+  }
+  sortByCatDesc(){
+    this.favouriteService.sortFavoritesByCategoryDesc().then((favList: FavouriteItem[]) => {
+      this.favouriteList = favList;
+    });
+  }
+  sortByDate(){
+    this.favouriteService.sortFavoritesByDate().then((favList: FavouriteItem[]) => {
+      this.favouriteList = favList;
+    });
+  }
+  sortByDateDesc(){
+    this.favouriteService.sortFavoritesByDateDesc().then((favList: FavouriteItem[]) => {
+      this.favouriteList = favList;
+    });
+  }
 }
