@@ -35,14 +35,19 @@ export class FavouriteListComponent {
   get filterByCategory (): number { 
     return this._filterByCategory;
   }
-  set filterByCategory( value: number){
+  set filterByCategory(value: number) {
     this._filterByCategory = value;
     console.log(this.filterByCategory);
-    if (this.filterByCategory !==0){
-    this.favouriteService.filterFavourites(this.filterByCategory).then((favList: FavouriteItem[]) => {
-      this.favouriteList = favList;
+    if (this.filterByCategory !== 0) {
+      this.favouriteService.filterFavourites(this.filterByCategory).then((favList: FavouriteItem[]) => {
+        this.favouriteList = favList;
+      });
     }
-    );}
+    if (this.filterByCategory == 0) {
+      this.favouriteService.getAllFavourites().then((favList: FavouriteItem[]) => {
+        this.favouriteList = favList;
+      });
+    }
   }
   private _filterByCategory = 0;
 
