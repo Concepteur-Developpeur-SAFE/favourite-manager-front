@@ -2,7 +2,7 @@
 
   <div class="columns">
     <div class="column is-narrow">
-      <button (click)="deleteFavorite()" class="delete"></button>
+      <button (click)="deleteFavorite()" class="button is-danger" [disabled]="idsToDelete.length===0">delete</button>
     </div>
     <div class="column">
       <table
@@ -43,7 +43,7 @@
                 <input
                   type="checkbox"
                   [(ngModel)]="checked[f.id]"
-                  (change)="checkMasterCheckbox()"
+                  (change)="checkMasterCheckbox(f.id)"
                 />
               </label>
             </td>

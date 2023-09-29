@@ -64,12 +64,27 @@ export class FavouriteListComponent {
 
 
   toggleAllCheckboxes() {
-    for (const item of this.favouriteList) {
-      this.checked[item.id] = this.masterCheckboxChecked;
+    for(let fav of this.favouriteList)
+    {
+      this.checked[fav.id] = this.masterCheckboxChecked;
+      this.updateSelection(fav.id);
     }
   }
+  idsToDelete: number[] = [];
 
-  checkMasterCheckbox() {
+  updateSelection(id: number)
+  {
+    if(this.checked[id])
+    {
+      if(!this.idsToDelete.includes(id))
+          this.idsToDelete.push(id);
+    }  
+    else
+      this.idsToDelete.splice(this.idsToDelete.indexOf(id), 1);
+  }
+  checkMasterCheckbox(id: number) {
+      
+    this.updateSelection(id);
     const checkedCount = Object.values(this.checked).filter(
       (value) => value
     ).length;
@@ -77,15 +92,9 @@ export class FavouriteListComponent {
   }
 
   deleteFavorite() {
-    let idsToDelete = [];
-    for (const item of this.favouriteList) {
-      if (this.checked[item.id]) {
-        idsToDelete.push(item.id);
-      }
-      for(let id of idsToDelete)
-        this.checked[id] = false;
-    }
-    this.favouriteService.deleteFavorite(idsToDelete).then(
+    for(let id of this.idsToDelete)
+      this.checked[id] = false;
+    this.favouriteService.deleteFavorite(this.idsToDelete).then(
       (response) => this.refresh()
     );
     
