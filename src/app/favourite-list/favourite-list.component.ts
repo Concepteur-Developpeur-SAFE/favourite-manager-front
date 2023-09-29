@@ -20,10 +20,7 @@ export class FavouriteListComponent {
   favouriteList: FavouriteItem[] = [];
   favouriteService: FavouriteService = inject(FavouriteService);
   constructor() {
-    this.favouriteService.getAllFavourites().then((favList:FavouriteItem[])=>{
-      this.favouriteList = favList;
-    }
-    );
+    this.refresh();
 
   }
   @Output() setModeEvent = new EventEmitter<string>();
@@ -37,5 +34,12 @@ export class FavouriteListComponent {
   update(favourite:FavouriteItem){
     this.setMode('create');
     this.updateCurrentFavourite(favourite);
+  }
+  refresh()
+  {
+    this.favouriteService.getAllFavourites().then((favList:FavouriteItem[])=>{
+      this.favouriteList = favList;
+    }
+    );
   }
 }

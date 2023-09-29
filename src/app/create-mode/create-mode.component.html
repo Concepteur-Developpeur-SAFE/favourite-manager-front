@@ -19,7 +19,7 @@
               </div>
             </div>
           </div>
-          <button class="button is-primary" type="button" (click)="validate()">OK</button>
+          <button class="button is-primary" type="button" (click)="validate()" [disabled]="!favorite.link||favorite.category.id==0">OK</button>
           <button class="button is-default" type="button" (click)="cancel()">Cancel</button>
         </form>
       </div>

@@ -4,7 +4,9 @@ import { FavouriteItem } from '../favourite-item';
 import { CategoryItem } from '../category-item';
 import { FavouriteService } from '../favourite.service';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
+// CommonJS
 @Component({
   selector: 'app-create-mode',
   standalone: true,
@@ -15,7 +17,10 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './create-mode.component.html',
   styleUrls: ['./create-mode.component.css']
 })
+
 export class CreateModeComponent {
+  
+
 
   DEFAULT_FAVOURITE: FavouriteItem = {
     id: 0,
@@ -48,9 +53,42 @@ export class CreateModeComponent {
   }
 
   validate(){
-    this.favouriteService.addFavourite(this.favorite);
-    this.setMode('view');
-    this.favorite = this.DEFAULT_FAVOURITE;
+    this.favouriteService.addFavourite(this.favorite).then(
+      (response) => {
+        if(response==200)
+        {
+          Swal.fire(
+            {
+              title: 'Success',
+              text: 'A favourite was added successfully',
+              icon: 'success'
+            }
+          )
+          this.setMode('view');
+          this.favorite = this.DEFAULT_FAVOURITE;
+        }
+        else
+        {
+          Swal.fire(
+            {
+              title: 'Error',
+              text: 'Link already exists',
+              icon: 'error'
+            }
+          )
+        }
+        
+      }
+      ).catch(
+        (error) => Swal.fire(
+          {
+            title: 'Error',
+            text: 'Error while adding the favourite',
+            icon: 'error'
+          }
+        )
+      )
+    
   }
   
   cancel(){
