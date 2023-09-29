@@ -19,12 +19,8 @@ export class FavouriteListComponent {
   checked: boolean[] = new Array(100).fill(false);
   favouriteList: FavouriteItem[] = [];
   favouriteService: FavouriteService = inject(FavouriteService);
-  constructor() {  
-      this.favouriteService.getAllFavourites().then((favList: FavouriteItem[]) => {
-        this.favouriteList = favList;
-      }
-      );
-    
+  constructor() {
+    this.refresh();
   }
   @Output() setModeEvent = new EventEmitter<string>();
   @Output() updateCurrentFavouriteEvent = new EventEmitter<FavouriteItem>();
@@ -58,6 +54,14 @@ export class FavouriteListComponent {
   update(favourite: FavouriteItem) {
     this.setMode('create');
     this.updateCurrentFavourite(favourite);
+  }
+
+  refresh()
+  {
+    this.favouriteService.getAllFavourites().then((favList:FavouriteItem[])=>{
+      this.favouriteList = favList;
+    }
+    );
   }
   sortByCat() {
     this.favouriteService.sortFavoritesByCategory().then((favList: FavouriteItem[]) => {
