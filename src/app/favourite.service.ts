@@ -19,7 +19,7 @@ export class FavouriteService {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     var raw = JSON.stringify({
-      "label": "label",
+      "label": favourite.label,
       "link": favourite.link,
       "categoryId": favourite.category.id
     });

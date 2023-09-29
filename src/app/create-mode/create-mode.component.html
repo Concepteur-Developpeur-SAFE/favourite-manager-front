@@ -3,12 +3,7 @@
       <div class="column">
         <h2 class="title">Add/Update a Favorite</h2>
         <form name="form" class="form-validation" novalidate role="form">
-          <div class="field">
-            <label class="label">Link *</label>
-            <div class="control">
-              <input type="text" [(ngModel)]="favorite.link" [ngModelOptions]="{standalone:true}" class="input" required="required" />
-            </div>
-          </div>
+          
           <div class="field">
             <label class="label">Category *</label>
             <div class="control">
@@ -19,7 +14,19 @@
               </div>
             </div>
           </div>
-          <button class="button is-primary" type="button" (click)="validate()" [disabled]="!favorite.link||favorite.category.id==0">OK</button>
+          <div class="field">
+            <label class="label">Link *</label>
+            <div class="control">
+              <input type="text" [(ngModel)]="favorite.link" [ngModelOptions]="{standalone:true}" class="input" required="required" />
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Label *</label>
+            <div class="control">
+              <input type="text" [(ngModel)]="favorite.label" [ngModelOptions]="{standalone:true}" class="input" required="required" />
+            </div>
+          </div>
+          <button class="button is-primary" type="button" (click)="validate()" [disabled]="!favorite.label||!favorite.link||favorite.category.id==0">OK</button>
           <button class="button is-default" type="button" (click)="cancel()">Cancel</button>
         </form>
       </div>
