@@ -20,12 +20,9 @@ export class FavouriteListComponent {
     this.refresh();
   }
 
-  favouriteList: FavouriteItem[] = [];
-  favouriteService: FavouriteService = inject(FavouriteService);
 
   private _filterByCategory = 0;
   masterCheckboxChecked: boolean = false;
-  checked: boolean[] = new Array(100).fill(false);
 
   @Output() setModeEvent = new EventEmitter<string>();
   @Output() updateCurrentFavouriteEvent = new EventEmitter<FavouriteItem>();
@@ -85,8 +82,13 @@ export class FavouriteListComponent {
       if (this.checked[item.id]) {
         idsToDelete.push(item.id);
       }
+      for(let id of idsToDelete)
+        this.checked[id] = false;
     }
-    this.favouriteService.deleteFavorite(idsToDelete);
+    this.favouriteService.deleteFavorite(idsToDelete).then(
+      (response) => this.refresh()
+    );
+    
   }
   refresh()
   {

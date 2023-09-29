@@ -10,13 +10,6 @@ export class FavouriteService {
 
   /* FAVOURITES */
 
-  addFavourite(favourite: FavouriteItem): void {
-    const copyOfFavourite: FavouriteItem = { ...favourite };
-    fetch("https://localhost:7280/api/favourite/add", {
-      method: "POST",
-      body: JSON.stringify(copyOfFavourite),
-    });
-  }
 
   async getAllFavourites(): Promise<FavouriteItem[]> {
     const data = fetch("https://localhost:7280/api/favorite/get");
@@ -90,7 +83,4 @@ async sortFavoritesByDateDesc(): Promise<FavouriteItem[]> {
 }
 
     
-  constructor(
-    private http: HttpClient
-  ){}
 }

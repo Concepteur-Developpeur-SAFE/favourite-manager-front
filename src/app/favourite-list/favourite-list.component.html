@@ -23,13 +23,13 @@
             <th>Link</th>
             <th class="is-clickable">
               <span>Category</span>
-              <span>&#x2191;</span>
-              <span>&#x2193;</span>
+              <span (click)="sortByCat()">&#x2191;</span>
+                <span (click)="sortByCatDesc()">&#x2193;</span>
             </th>
             <th class="is-narrow is-clickable">
               <span>Last Update</span>
-              <span>&#x2191;</span>
-              <span>&#x2193;</span>
+              <span (click)="sortByDate()">&#x2191;</span>
+                <span (click)="sortByDateDesc()">&#x2193;</span>
             </th>
           </tr>
         </thead>
@@ -51,9 +51,6 @@
             <td>{{ f.link }}<a data-ng-href="f.link" target="_blank"></a></td>
             <td>{{ f.category.label }}</td>
             <td>{{ f.updatedAt | date : "yyyy-MM-dd" }}</td>
-            <td class="is-narrow">
-              <a href="#" (click)="update(f)">update</a>
-            </td>
           </tr>
         </tbody>
       </table>
