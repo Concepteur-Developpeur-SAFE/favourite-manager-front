@@ -13,12 +13,11 @@ import { FormsModule } from "@angular/forms";
 })
 export class FavouriteListComponent {
   
+  checked: boolean[] = new Array(100).fill(false);
+  favouriteList: FavouriteItem[] = [];
+  favouriteService: FavouriteService = inject(FavouriteService);
   constructor() {
-    this.favouriteService
-      .getAllFavourites()
-      .then((favList: FavouriteItem[]) => {
-        this.favouriteList = favList;
-      });
+    this.refresh();
   }
 
   favouriteList: FavouriteItem[] = [];
@@ -66,6 +65,7 @@ export class FavouriteListComponent {
     this.updateCurrentFavourite(favourite);
   }
 
+
   toggleAllCheckboxes() {
     for (const item of this.favouriteList) {
       this.checked[item.id] = this.masterCheckboxChecked;
@@ -87,5 +87,32 @@ export class FavouriteListComponent {
       }
     }
     this.favouriteService.deleteFavorite(idsToDelete);
+  }
+  refresh()
+  {
+    this.favouriteService.getAllFavourites().then((favList:FavouriteItem[])=>{
+      this.favouriteList = favList;
+    }
+    );
+  }
+  sortByCat() {
+    this.favouriteService.sortFavoritesByCategory().then((favList: FavouriteItem[]) => {
+      this.favouriteList = favList;
+    });
+  }
+  sortByCatDesc(){
+    this.favouriteService.sortFavoritesByCategoryDesc().then((favList: FavouriteItem[]) => {
+      this.favouriteList = favList;
+    });
+  }
+  sortByDate(){
+    this.favouriteService.sortFavoritesByDate().then((favList: FavouriteItem[]) => {
+      this.favouriteList = favList;
+    });
+  }
+  sortByDateDesc(){
+    this.favouriteService.sortFavoritesByDateDesc().then((favList: FavouriteItem[]) => {
+      this.favouriteList = favList;
+    });
   }
 }

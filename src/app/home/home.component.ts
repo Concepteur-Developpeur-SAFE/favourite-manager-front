@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ViewModeComponent } from '../view-mode/view-mode.component';
 import { CreateModeComponent } from '../create-mode/create-mode.component';
@@ -18,6 +18,7 @@ import { FavouriteItem } from '../favourite-item';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  @ViewChild(FavouriteListComponent) child: FavouriteListComponent = new FavouriteListComponent();
 
   _mode : string = "view";
   public set mode(newMode: string) {
@@ -28,6 +29,7 @@ export class HomeComponent {
   }
   public setMode(newMode: string) {
     this._mode = newMode;
+    this.child.refresh();
   }
   public setFilterFavorites(categoryId: number){
     this.favoriteFilter = categoryId;
@@ -46,6 +48,5 @@ export class HomeComponent {
   currentFavorite: FavouriteItem = this.DEFAULT_FAVOURITE;
   updateCurrentFavourite(favourite: FavouriteItem){
     this.currentFavorite = favourite;
-    console.log(this.currentFavorite);
   }
 }
