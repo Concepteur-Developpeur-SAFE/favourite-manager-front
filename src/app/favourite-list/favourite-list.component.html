@@ -16,13 +16,13 @@
               <th>Link</th>
               <th class="is-clickable">
                 <span>Category</span>
-                <span>&#x2191;</span>
-                <span>&#x2193;</span>
+                <span (click)="sortByCat()">&#x2191;</span>
+                <span (click)="sortByCatDesc()">&#x2193;</span>
               </th>
               <th class="is-narrow is-clickable">
                 <span>Last Update</span>
-                <span >&#x2191;</span>
-                <span >&#x2193;</span>
+                <span (click)="sortByDate()">&#x2191;</span>
+                <span (click)="sortByDateDesc()">&#x2193;</span>
               </th>
             </tr>
           </thead>

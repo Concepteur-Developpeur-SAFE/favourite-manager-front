@@ -19,6 +19,7 @@ import { FavouriteItem } from '../favourite-item';
 })
 export class HomeComponent {
   @ViewChild(FavouriteListComponent) child: FavouriteListComponent = new FavouriteListComponent();
+
   _mode : string = "view";
   public set mode(newMode: string) {
     this._mode = newMode;
@@ -30,6 +31,10 @@ export class HomeComponent {
     this._mode = newMode;
     this.child.refresh();
   }
+  public setFilterFavorites(categoryId: number){
+    this.favoriteFilter = categoryId;
+  }
+  favoriteFilter: number = 0;
   DEFAULT_FAVOURITE: FavouriteItem = {
     id: 0,
     link: '',

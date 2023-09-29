@@ -23,7 +23,6 @@ export class FavouriteService {
       "link": favourite.link,
       "categoryId": favourite.category.id
     });
-
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
@@ -39,6 +38,28 @@ export class FavouriteService {
         return 500;
     }
   }
+  async filterFavourites(categoryId: number): Promise<FavouriteItem[]>{
+  const data = fetch (`https://localhost:7280/api/favorite/filter/`+categoryId);
+  return (await data).json() ?? [];
+}
+async sortFavoritesByCategory(): Promise<FavouriteItem[]> {
+  const data = fetch('https://localhost:7280/api/favorite/sortByCat');
+  return (await data).json() ?? [];
+}
+async sortFavoritesByCategoryDesc(): Promise<FavouriteItem[]> {
+  const data = fetch('https://localhost:7280/api/favorite/sortByCatDesc');
+  return (await data).json() ?? [];
+}
+async sortFavoritesByDate(): Promise<FavouriteItem[]> {
+  const data = fetch('https://localhost:7280/api/favorite/sortByDate');
+  return (await data).json() ?? [];
+}
+async sortFavoritesByDateDesc(): Promise<FavouriteItem[]> {
+  const data = fetch('https://localhost:7280/api/favorite/sortByDateDesc');
+  return (await data).json() ?? [];
+}
+
+    
   constructor(
     private http: HttpClient
   ){}

@@ -1,8 +1,8 @@
 <section class="section">
     <div class="container" >
         <h1 class="title">Favorite Manager</h1>
-        <app-view-mode (setModeEvent)="setMode($event)" *ngIf="mode=='view'"></app-view-mode>
+        <app-view-mode (setModeEvent)="setMode($event)" (setFilterEvent)="setFilterFavorites($event)" *ngIf="mode=='view'"></app-view-mode>
         <app-create-mode *ngIf="mode=='create'" (setModeEvent)="setMode($event)" [favorite]="currentFavorite"></app-create-mode>
-        <app-favourite-list (setModeEvent)="setMode($event)" (updateCurrentFavouriteEvent)="updateCurrentFavourite($event)" ></app-favourite-list>
+        <app-favourite-list (setModeEvent)="setMode($event)" (updateCurrentFavouriteEvent)="updateCurrentFavourite($event)" [filterByCategory]="favoriteFilter"></app-favourite-list>
     </div>
 </section>

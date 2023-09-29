@@ -1,4 +1,4 @@
-import { Component, inject, Output, EventEmitter } from '@angular/core';
+import { Component, inject, Output, EventEmitter, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FavouriteService } from '../favourite.service';
 import { FavouriteItem } from '../favourite-item';
@@ -21,25 +21,66 @@ export class FavouriteListComponent {
   favouriteService: FavouriteService = inject(FavouriteService);
   constructor() {
     this.refresh();
-
   }
   @Output() setModeEvent = new EventEmitter<string>();
   @Output() updateCurrentFavouriteEvent = new EventEmitter<FavouriteItem>();
   setMode(mode: string) {
     this.setModeEvent.emit(mode);
   }
-  updateCurrentFavourite(favourite:FavouriteItem){
+  @Input() 
+  get filterByCategory (): number { 
+    return this._filterByCategory;
+  }
+  set filterByCategory(value: number) {
+    this._filterByCategory = value;
+    console.log(this.filterByCategory);
+    if (this.filterByCategory !== 0) {
+      this.favouriteService.filterFavourites(this.filterByCategory).then((favList: FavouriteItem[]) => {
+        this.favouriteList = favList;
+      });
+    }
+    if (this.filterByCategory == 0) {
+      this.favouriteService.getAllFavourites().then((favList: FavouriteItem[]) => {
+        this.favouriteList = favList;
+      });
+    }
+  }
+  private _filterByCategory = 0;
+
+  updateCurrentFavourite(favourite: FavouriteItem) {
+    
     this.updateCurrentFavouriteEvent.emit(favourite);
   }
-  update(favourite:FavouriteItem){
+  update(favourite: FavouriteItem) {
     this.setMode('create');
     this.updateCurrentFavourite(favourite);
   }
+
   refresh()
   {
     this.favouriteService.getAllFavourites().then((favList:FavouriteItem[])=>{
       this.favouriteList = favList;
     }
     );
+  }
+  sortByCat() {
+    this.favouriteService.sortFavoritesByCategory().then((favList: FavouriteItem[]) => {
+      this.favouriteList = favList;
+    });
+  }
+  sortByCatDesc(){
+    this.favouriteService.sortFavoritesByCategoryDesc().then((favList: FavouriteItem[]) => {
+      this.favouriteList = favList;
+    });
+  }
+  sortByDate(){
+    this.favouriteService.sortFavoritesByDate().then((favList: FavouriteItem[]) => {
+      this.favouriteList = favList;
+    });
+  }
+  sortByDateDesc(){
+    this.favouriteService.sortFavoritesByDateDesc().then((favList: FavouriteItem[]) => {
+      this.favouriteList = favList;
+    });
   }
 }
