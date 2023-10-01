@@ -19,9 +19,7 @@ import Swal from 'sweetalert2';
 })
 
 export class CreateModeComponent {
-  
-
-
+  // Default favourite item value
   DEFAULT_FAVOURITE: FavouriteItem = {
     id: 0,
     link: '',
@@ -33,25 +31,24 @@ export class CreateModeComponent {
     updatedAt: ''
   };
 
-  @Input() favorite: FavouriteItem = this.DEFAULT_FAVOURITE;
-
-  categories: CategoryItem[] = [];
-
-  @Output() setModeEvent = new EventEmitter<string>();
-
+  // Service Dependency injection
   favouriteService: FavouriteService = inject(FavouriteService);
-
   constructor() {
-    this.favouriteService.getAllCategories().then((catList:CategoryItem[])=>{
-      this.categories = catList;
-    }
-    );
+    this.favouriteService.getAllCategories().then((catList:CategoryItem[])=>this.categories = catList);
   }
 
+  // Current favourite in the creation form
+  @Input() favorite: FavouriteItem = this.DEFAULT_FAVOURITE;
+  
+  categories: CategoryItem[] = [];
+
+  // Set display mode in home component (creation/view)
+  @Output() setModeEvent = new EventEmitter<string>();
   setMode(mode: string) {
     this.setModeEvent.emit(mode);
   }
 
+  // Add the favourite with the entered data
   validate(){
     this.favouriteService.addFavourite(this.favorite).then(
       (response) => {
@@ -91,6 +88,7 @@ export class CreateModeComponent {
     
   }
   
+  // Cancel the creation form
   cancel(){
     this.setMode('view');
     this.favorite = this.DEFAULT_FAVOURITE;

@@ -11,28 +11,50 @@ import { FormsModule } from "@angular/forms";
   templateUrl: "./favourite-list.component.html",
   styleUrls: ["./favourite-list.component.css"],
 })
+
 export class FavouriteListComponent {
   
-  checked: boolean[] = new Array(100).fill(false);
+
+  // Checkbox state for each favourite
+  checked: boolean[] = new Array(200).fill(false);
+  masterCheckboxChecked: boolean = false;
+
+  // Favourites to display
   favouriteList: FavouriteItem[] = [];
+
+  // Service dependency injection
   favouriteService: FavouriteService = inject(FavouriteService);
   constructor() {
     this.refresh();
   }
 
-
-  private _filterByCategory = 0;
-  masterCheckboxChecked: boolean = false;
-
+  // Change display mode (creation/view)
   @Output() setModeEvent = new EventEmitter<string>();
+  setMode(mode: string) {
+    this.setModeEvent.emit(mode);
+  }
+
+
+  // Send updated favourite data to home component 
   @Output() updateCurrentFavouriteEvent = new EventEmitter<FavouriteItem>();
+  updateCurrentFavourite(favourite: FavouriteItem) {
+    this.updateCurrentFavouriteEvent.emit(favourite);
+  }
+  update(favourite: FavouriteItem) {
+    this.setMode("create");
+    this.updateCurrentFavourite(favourite);
+  }
+  
+
+  // Input from home component to filter the list
+  private _filterByCategory = 0;
   @Input()
   get filterByCategory(): number {
     return this._filterByCategory;
   }
+  // Detect value change
   set filterByCategory(value: number) {
     this._filterByCategory = value;
-    console.log(this.filterByCategory);
     if (this.filterByCategory !== 0) {
       this.favouriteService
         .filterFavourites(this.filterByCategory)
@@ -48,21 +70,9 @@ export class FavouriteListComponent {
         });
     }
   }
-
-  setMode(mode: string) {
-    this.setModeEvent.emit(mode);
-  }
-
-  updateCurrentFavourite(favourite: FavouriteItem) {
-    this.updateCurrentFavouriteEvent.emit(favourite);
-  }
-
-  update(favourite: FavouriteItem) {
-    this.setMode("create");
-    this.updateCurrentFavourite(favourite);
-  }
-
-
+  
+  // Deletion of the selected favourites
+  idsToDelete: number[] = [];
   toggleAllCheckboxes() {
     for(let fav of this.favouriteList)
     {
@@ -70,8 +80,6 @@ export class FavouriteListComponent {
       this.updateSelection(fav.id);
     }
   }
-  idsToDelete: number[] = [];
-
   updateSelection(id: number)
   {
     if(this.checked[id])
@@ -82,23 +90,22 @@ export class FavouriteListComponent {
     else
       this.idsToDelete.splice(this.idsToDelete.indexOf(id), 1);
   }
-  checkMasterCheckbox(id: number) {
-      
+  checkMasterCheckbox(id: number) {  
     this.updateSelection(id);
     const checkedCount = Object.values(this.checked).filter(
       (value) => value
     ).length;
     this.masterCheckboxChecked = checkedCount === this.favouriteList.length;
   }
-
   deleteFavorite() {
     for(let id of this.idsToDelete)
       this.checked[id] = false;
     this.favouriteService.deleteFavorite(this.idsToDelete).then(
       (response) => this.refresh()
     );
-    
   }
+
+  // Refresh the favourite list
   refresh()
   {
     this.favouriteService.getAllFavourites().then((favList:FavouriteItem[])=>{
@@ -106,6 +113,7 @@ export class FavouriteListComponent {
     }
     );
   }
+
   sortByCat() {
     this.favouriteService.sortFavoritesByCategory().then((favList: FavouriteItem[]) => {
       this.favouriteList = favList;

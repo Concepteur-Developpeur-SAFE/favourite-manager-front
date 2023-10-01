@@ -17,9 +17,25 @@ import { FavouriteItem } from '../favourite-item';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
+
 export class HomeComponent {
+
+  // Default favourite item value
+  DEFAULT_FAVOURITE: FavouriteItem = {
+    id: 0,
+    link: '',
+    label: '',
+    category: {
+      id: 0,
+      label: ''
+    },
+    updatedAt: ''
+  };
+
+  // Access to child component (FavouriteList)
   @ViewChild(FavouriteListComponent) child: FavouriteListComponent = new FavouriteListComponent();
 
+  // Display mode (view/creation)
   _mode : string = "view";
   public set mode(newMode: string) {
     this._mode = newMode;
@@ -31,20 +47,14 @@ export class HomeComponent {
     this._mode = newMode;
     this.child.refresh();
   }
+
+  // Categoy id to filter favourites
+  favoriteFilter: number = 0;
   public setFilterFavorites(categoryId: number){
     this.favoriteFilter = categoryId;
   }
-  favoriteFilter: number = 0;
-  DEFAULT_FAVOURITE: FavouriteItem = {
-    id: 0,
-    link: '',
-    label: '',
-    category: {
-      id: 0,
-      label: ''
-    },
-    updatedAt: ''
-  };
+  
+  // Current favourite data for creation mode
   currentFavorite: FavouriteItem = this.DEFAULT_FAVOURITE;
   updateCurrentFavourite(favourite: FavouriteItem){
     this.currentFavorite = favourite;

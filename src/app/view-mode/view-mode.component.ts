@@ -13,34 +13,34 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './view-mode.component.html',
   styleUrls: ['./view-mode.component.css']
 })
+
 export class ViewModeComponent {
-  @Output() setFilterEvent = new EventEmitter<number>();
-  setFilterFav(id: number) {
-    this.setFilterEvent.emit(id);
-  }
+
+
+  // Category id to filter the favourites
   categoryFilter : number = 0;
+  // List of categories and favourites to display
   categories: CategoryItem[] = [];
   favouriteList: FavouriteItem[] = [];
+
+  // Service dependency injection
   favouriteService: FavouriteService = inject(FavouriteService);
   constructor() {
-    this.favouriteService.getAllCategories().then((catList:CategoryItem[])=>{
-      this.categories = catList;
-    }
-    );
-    this.favouriteService.getAllFavourites().then((favList:FavouriteItem[])=>{
-      this.favouriteList = favList;
-    }
-    );
+    this.favouriteService.getAllCategories().then((catList:CategoryItem[])=>this.categories = catList);
+    this.favouriteService.getAllFavourites().then((favList:FavouriteItem[])=>this.favouriteList = favList);
   }
+  // Tell the home component to set the category filter id 
+  @Output() setFilterEvent = new EventEmitter<number>();
+  filterFavorites(categoryId: number): void {
+    if (categoryId !== 0) {
+      this.setFilterEvent.emit(categoryId);
+    }
+  }
+
+  // Tell the home component to set mode (view/creation)
   @Output() setModeEvent = new EventEmitter<string>();
   setMode(mode: string) {
     this.setModeEvent.emit(mode);
   }
-
-  filterFavorites(categoryId: number): void {
-    console.log(categoryId);
-    if (categoryId !== 0) {
-      this.setFilterEvent.emit(categoryId);
-  }
-}
+  
 }
