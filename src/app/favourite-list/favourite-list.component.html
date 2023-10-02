@@ -58,7 +58,7 @@
               </label>
             </td>
             <td>{{ f.id }}</td>
-            <td>{{ f.link }}<a data-ng-href="f.link" target="_blank"></a></td>
+            <td><a data-ng-href="f.link" target="_blank">{{ f.link }}</a></td>
             <td>{{ f.category.label }}</td>
             <td>{{ f.updatedAt | date : "yyyy-MM-dd" }}</td>
           </tr>
