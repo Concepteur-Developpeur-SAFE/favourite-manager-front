@@ -1,18 +1,24 @@
 <div class="box">
-    <h1 *ngIf="idsToDelete.length === 1 || idsToDelete.length === 0">
-      <span>{{ idsToDelete.length }} item selected</span>
-      <span class="spacer"></span>
-      <span>{{ favouriteList.length }} items total</span>
-    </h1>
-    <h1 *ngIf="idsToDelete.length > 1">
-      <span>{{ idsToDelete.length }} items selected</span>
-      <span class="spacer"></span>
-      <span>{{ favouriteList.length }} items total</span>
-    </h1>
-        <br>
+  <h1 *ngIf="idsToDelete.length === 1 || idsToDelete.length === 0">
+    <span>{{ idsToDelete.length }} item selected</span>
+    <span class="spacer"></span>
+    <span>{{ favouriteList.length }} items total</span>
+  </h1>
+  <h1 *ngIf="idsToDelete.length > 1">
+    <span>{{ idsToDelete.length }} items selected</span>
+    <span class="spacer"></span>
+    <span>{{ favouriteList.length }} items total</span>
+  </h1>
+  <br />
   <div class="columns">
     <div class="column is-narrow">
-      <button (click)="deleteFavorite()" class="button is-danger" [disabled]="idsToDelete.length===0">delete</button>
+      <button
+        (click)="deleteFavorite()"
+        class="button is-danger"
+        [disabled]="idsToDelete.length === 0"
+      >
+        delete
+      </button>
     </div>
     <div class="column">
       <table
@@ -34,12 +40,12 @@
             <th class="is-clickable">
               <span>Category</span>
               <span (click)="sortByCat()">&#x2191;</span>
-                <span (click)="sortByCatDesc()">&#x2193;</span>
+              <span (click)="sortByCatDesc()">&#x2193;</span>
             </th>
             <th class="is-narrow is-clickable">
               <span>Last Update</span>
               <span (click)="sortByDate()">&#x2191;</span>
-                <span (click)="sortByDateDesc()">&#x2193;</span>
+              <span (click)="sortByDateDesc()">&#x2193;</span>
             </th>
           </tr>
         </thead>

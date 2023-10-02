@@ -1,8 +1,8 @@
-import { Component, inject, Output, EventEmitter, Input } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { FavouriteService } from "../favourite.service";
-import { FavouriteItem } from "../favourite-item";
 import { FormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
+import { FavouriteItem } from "../favourite-item";
+import { FavouriteService } from "../favourite.service";
+import { Component, inject, Output, EventEmitter, Input } from "@angular/core";
 
 @Component({
   selector: "app-favourite-list",
@@ -11,10 +11,7 @@ import { FormsModule } from "@angular/forms";
   templateUrl: "./favourite-list.component.html",
   styleUrls: ["./favourite-list.component.css"],
 })
-
 export class FavouriteListComponent {
-  
-
   // Checkbox state for each favourite
   checked: boolean[] = new Array(200).fill(false);
   masterCheckboxChecked: boolean = false;
@@ -34,17 +31,17 @@ export class FavouriteListComponent {
     this.setModeEvent.emit(mode);
   }
 
-
-  // Send updated favourite data to home component 
+  // Send updated favourite data to home component
   @Output() updateCurrentFavouriteEvent = new EventEmitter<FavouriteItem>();
+
   updateCurrentFavourite(favourite: FavouriteItem) {
     this.updateCurrentFavouriteEvent.emit(favourite);
   }
+
   update(favourite: FavouriteItem) {
     this.setMode("create");
     this.updateCurrentFavourite(favourite);
   }
-  
 
   // Input from home component to filter the list
   private _filterByCategory = 0;
@@ -70,68 +67,76 @@ export class FavouriteListComponent {
         });
     }
   }
-  
+
   // Deletion of the selected favourites
   idsToDelete: number[] = [];
+
   toggleAllCheckboxes() {
-    for(let fav of this.favouriteList)
-    {
+    for (let fav of this.favouriteList) {
       this.checked[fav.id] = this.masterCheckboxChecked;
       this.updateSelection(fav.id);
     }
   }
-  updateSelection(id: number)
-  {
-    if(this.checked[id])
-    {
-      if(!this.idsToDelete.includes(id))
-          this.idsToDelete.push(id);
-    }  
-    else
-      this.idsToDelete.splice(this.idsToDelete.indexOf(id), 1);
+
+  updateSelection(id: number) {
+    if (this.checked[id]) {
+      if (!this.idsToDelete.includes(id)) this.idsToDelete.push(id);
+    } else this.idsToDelete.splice(this.idsToDelete.indexOf(id), 1);
   }
-  checkMasterCheckbox(id: number) {  
+
+  checkMasterCheckbox(id: number) {
     this.updateSelection(id);
     const checkedCount = Object.values(this.checked).filter(
       (value) => value
     ).length;
     this.masterCheckboxChecked = checkedCount === this.favouriteList.length;
   }
+
   deleteFavorite() {
-    for(let id of this.idsToDelete)
-      this.checked[id] = false;
-    this.favouriteService.deleteFavorite(this.idsToDelete).then(
-      (response) => this.refresh()
-    );
+    for (let id of this.idsToDelete) this.checked[id] = false;
+    this.favouriteService
+      .deleteFavorite(this.idsToDelete)
+      .then((response) => this.refresh());
   }
 
   // Refresh the favourite list
-  refresh()
-  {
-    this.favouriteService.getAllFavourites().then((favList:FavouriteItem[])=>{
-      this.favouriteList = favList;
-    }
-    );
+  refresh() {
+    this.favouriteService
+      .getAllFavourites()
+      .then((favList: FavouriteItem[]) => {
+        this.favouriteList = favList;
+      });
   }
 
   sortByCat() {
-    this.favouriteService.sortFavoritesByCategory().then((favList: FavouriteItem[]) => {
-      this.favouriteList = favList;
-    });
+    this.favouriteService
+      .sortFavoritesByCategory()
+      .then((favList: FavouriteItem[]) => {
+        this.favouriteList = favList;
+      });
   }
-  sortByCatDesc(){
-    this.favouriteService.sortFavoritesByCategoryDesc().then((favList: FavouriteItem[]) => {
-      this.favouriteList = favList;
-    });
+
+  sortByCatDesc() {
+    this.favouriteService
+      .sortFavoritesByCategoryDesc()
+      .then((favList: FavouriteItem[]) => {
+        this.favouriteList = favList;
+      });
   }
-  sortByDate(){
-    this.favouriteService.sortFavoritesByDate().then((favList: FavouriteItem[]) => {
-      this.favouriteList = favList;
-    });
+
+  sortByDate() {
+    this.favouriteService
+      .sortFavoritesByDate()
+      .then((favList: FavouriteItem[]) => {
+        this.favouriteList = favList;
+      });
   }
-  sortByDateDesc(){
-    this.favouriteService.sortFavoritesByDateDesc().then((favList: FavouriteItem[]) => {
-      this.favouriteList = favList;
-    });
+
+  sortByDateDesc() {
+    this.favouriteService
+      .sortFavoritesByDateDesc()
+      .then((favList: FavouriteItem[]) => {
+        this.favouriteList = favList;
+      });
   }
 }
