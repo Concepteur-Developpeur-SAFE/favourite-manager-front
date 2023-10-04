@@ -39,13 +39,13 @@
             <th>Link</th>
             <th class="is-clickable">
               <span>Category</span>
-              <span (click)="sortByCat()">&#x2191;</span>
-              <span (click)="sortByCatDesc()">&#x2193;</span>
+              <span (click)="sortByCat()">&nbsp;&nbsp;&#x2191;</span>
+              <span (click)="sortByCatDesc()">&nbsp;&nbsp;&#x2193;</span>
             </th>
             <th class="is-narrow is-clickable">
               <span>Last Update</span>
-              <span (click)="sortByDate()">&#x2191;</span>
-              <span (click)="sortByDateDesc()">&#x2193;</span>
+              <span (click)="sortByDate()">&nbsp;&nbsp;&#x2191;</span>
+              <span (click)="sortByDateDesc()">&nbsp;&nbsp;&#x2193;</span>
             </th>
           </tr>
         </thead>
@@ -64,7 +64,7 @@
               </label>
             </td>
             <td>{{ f.id }}</td>
-            <td>{{ f.link }}<a data-ng-href="f.link" target="_blank"></a></td>
+            <td><a data-ng-href="f.link" target="_blank">{{ f.link }}</a></td>
             <td>{{ f.category.label }}</td>
             <td>{{ f.updatedAt | date : "yyyy-MM-dd" }}</td>
           </tr>
